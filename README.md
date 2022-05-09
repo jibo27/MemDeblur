@@ -57,5 +57,5 @@ As mentioned in Section 4.1, we reduce the memory size by discarding old memorie
 We plan to update the evaluation results on DVD dataset in the near future.
 
 
-## Acknowledgement
+## Credits
 Our codes are modified from [ESTRNN](https://github.com/zzh-tech/ESTRNN) and [mmediting](https://github.com/open-mmlab/mmediting). We thank for their excellent work!
