@@ -21,6 +21,8 @@ This repository is the Pytorch implementation of [Multi-Scale Memory-Based Video
 ## Checkpoints and Dataset
 Please download the checkpoints and dataset from [Google Drive](https://drive.google.com/drive/folders/1rd9bIvsk9DBZaA7LXWGNMZ3SM11-_g8h?usp=sharing).
 
+Inference result on the datasets are also avaliable in the above link.
+
 Our codes use lmdb format. If you would like to use other datasets, please convert them into lmdb format. The details can be found [here](https://github.com/zzh-tech/ESTRNN/blob/master/data/how_to_make_dataset_file.ipynb).
 
 In our CVPR version, the reported GMACs includes a redundant operation. We removed this operation, so the actual GMACs is 325.48.
@@ -47,6 +49,7 @@ To evaluate the model on the original GOPRO dataset, please **turn on the `test_
 ```
 python main.py --config config/memdeblur_gopro_ori.yml
 ```
+
 As mentioned in Section 4.1, we reduce the memory size by discarding old memories. This feature is automatically turned on as indicated by `test_mem_length: 5 ` in the config file. To turn this feature off and utilize the full memory, please set it to `None`, i.e., `test_mem_length: ~ `.
 
 
