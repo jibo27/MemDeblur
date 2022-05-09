@@ -1,0 +1,67 @@
+# experiment mark
+description: develop # experiment description
+save_dir: work_dirs
+
+# global parameters
+seed: 39 # random seed
+threads: 8 # number of threads for dataloader
+num_gpus: 1 # number of GPUs to use
+no_profile: false # show the number of parameters and computation cost
+profile_H: !!int 720 # height of image to generate profile of model
+profile_W: !!int 1280 # width of image to generate profile of model
+resume: false
+resume_file: ~
+
+# data parameters
+dataset: gopro_ds
+data_loader: gopro
+train_input_path: dataset/gopro_ds_train
+train_gt_path: dataset/gopro_ds_train_gt
+train_info_path: dataset/gopro_ds_info_train.pkl
+test_input_path: dataset/gopro_ds_valid
+test_gt_path: dataset/gopro_ds_valid_gt
+test_info_path: dataset/gopro_ds_info_valid.pkl
+frames: !!int 8 # Training length
+data_format: RGB
+patch_size: [256, 256]
+
+# model parameters
+model: memdeblur
+mid_channels: 64
+mem_every: [1, 2, 5]
+num_blocks_forward: 30
+num_blocks_backward: 10
+scales: [4, 2, 1]
+
+# loss parameters
+loss: 1*L1_Charbonnier_loss_color # type of loss function, e.g. 1*MSE|1e-4*Perceptual
+
+# metrics parameters
+metrics: PSNR # type of evaluation metrics
+
+# optimizer parameters
+optimizer: Adam # method of optimization
+lr: 0.0005 # initial learning rate, 5e-4
+lr_scheduler: multi_step # learning rate adjustment stratedy
+batch_size: 8
+milestones: [200, 350, 450, 500]
+decay_gamma: 0.5 # decay rate
+max_norm: 20
+
+# training parameters
+start_epoch: 1 # first epoch number
+end_epoch: 600 # last epoch number
+
+# test parameters
+test_only: false # only do test. Set false if you want to train the model
+test_frames: -1 # -1 means that the model takes all frames as input and output them. 
+                # Otherwise the model splits the video into several segments of length "test_frame" and then restores each segment separately.
+                # If GPU memory is small, please reduce this value
+test_save_img: true # If true, write the output images to the disk
+test_mem_length: 5 # During evaluation, we only keep the most recent 5 memory frames. This is a trick to speed up the inference without theoretical support
+test_save_dir: work_dirs/memdeblur_gopro_ds/results
+test_checkpoint: checkpoints/memdeblur_gopro_ds.pth.tar
+video: false # if true, generate video results
+
+normalize: true
+centralize: true
